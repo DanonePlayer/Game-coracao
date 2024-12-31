@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo do Coração</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f9d9f7;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .heart {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            clip-path: polygon(50% 0%, 100% 35%, 82% 100%, 50% 75%, 18% 100%, 0% 35%);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .message {
+            display: none;
+            font-size: 50px;
+            color: white;
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .btn {
+            position: absolute;
+            bottom: 20px;
+            background: #ff66b2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="heart" id="heart"></div>
+        <div class="message" id="message">Eu te amo meu amor</div>
+        <button class="btn" id="restart-btn" style="display:none;">Jogar Novamente</button>
+    </div>
+
+    <script>
+        let attempts = 0;
+        const heart = document.getElementById('heart');
+        const message = document.getElementById('message');
+        const restartBtn = document.getElementById('restart-btn');
+
+        heart.addEventListener('click', () => {
+            attempts++;
+            
+            if (attempts === 3) {
+                message.style.display = 'block';
+                restartBtn.style.display = 'block';
+                heart.style.display = 'none';
+            } else {
+                // Muda a posição do coração
+                const randomX = Math.random() * (window.innerWidth - 100); // -100 para garantir que o coração não saia da tela
+                const randomY = Math.random() * (window.innerHeight - 100); // -100 para garantir que o coração não saia da tela
+                heart.style.left = randomX + 'px';
+                heart.style.top = randomY + 'px';
+            }
+        });
+
+        restartBtn.addEventListener('click', () => {
+            attempts = 0;
+            heart.style.display = 'block';
+            message.style.display = 'none';
+            restartBtn.style.display = 'none';
+        });
+    </script>
+    
+</body>
+</html>
